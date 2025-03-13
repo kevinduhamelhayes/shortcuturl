@@ -1,115 +1,93 @@
-# ShortcutURL
+# ShortcutURL - Acortador de URLs
 
-A modern URL shortener built with the MERN stack (MongoDB, Express, React, Node.js).
+ShortcutURL es una aplicación web para acortar URLs de forma sencilla y rápida. Permite a los usuarios crear enlaces cortos y fáciles de compartir, así como hacer seguimiento de los clics en sus enlaces.
 
-## Features
+![ShortcutURL Screenshot](https://i.imgur.com/example.png)
 
-- Shorten long URLs to easily shareable links
-- Track click statistics for each shortened URL
-- User authentication for managing your shortened URLs
-- Responsive design with modern UI
+## Características
 
-## Tech Stack
+- Acortamiento de URLs sin necesidad de registro
+- Registro de usuarios para gestionar URLs acortadas
+- Estadísticas de clics para cada URL
+- Interfaz responsive para dispositivos móviles y de escritorio
+- Contador global de URLs acortadas, usuarios registrados y clics totales
 
-- **Frontend**: React.js with Tailwind CSS and shadcn/ui components
-- **Backend**: Node.js with Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT
+## Tecnologías utilizadas
 
-## Getting Started
+- **Frontend**: React, Tailwind CSS, Vite
+- **Backend**: Node.js, Express
+- **Base de datos**: MongoDB Atlas
+- **Autenticación**: JWT
 
-### Prerequisites
+## Requisitos previos
 
-- Node.js (v14 or higher)
-- MongoDB (local or Atlas)
-- Git
+- Node.js (v14 o superior)
+- npm o yarn
+- MongoDB Atlas cuenta (o MongoDB local)
 
-### Installation
+## Instalación
 
-1. Clone the repository
+1. Clona el repositorio:
    ```bash
-   git clone https://github.com/kevinduhamelhayes/shortcuturl.git
+   git clone https://github.com/midudev/shortcuturl.git
    cd shortcuturl
    ```
 
-2. Install backend dependencies
+2. Instala las dependencias:
    ```bash
-   cd backend
-   npm install
+   npm run install-deps
    ```
 
-3. Install frontend dependencies
-   ```bash
-   cd ../frontend
-   npm install
+3. Crea un archivo `.env` en la carpeta `backend` con las siguientes variables:
    ```
-
-4. Create a `.env` file in the backend directory with the following variables:
-   ```
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
+   NODE_ENV=development
    PORT=5000
+   MONGO_URI=tu_cadena_de_conexion_mongodb
+   JWT_SECRET=tu_secreto_jwt
    ```
 
-5. Start the development servers
+4. Inicia la aplicación en modo desarrollo:
    ```bash
-   # In the backend directory
    npm run dev
-   
-   # In the frontend directory
-   npm start
    ```
 
-## Project Structure
+## Despliegue en producción
 
-```
-shortcuturl/
-│── backend/  (API with Express.js and MongoDB)
-│   ├── config/
-│   │   ├── db.js         # MongoDB connection
-│   │   ├── models/
-│   │   │   ├── Url.js        # URL data model
-│   │   │   ├── User.js       # User data model
-│   │   ├── routes/
-│   │   │   ├── urlRoutes.js  # API routes for URLs
-│   │   │   ├── userRoutes.js # API routes for users
-│   │   ├── controllers/
-│   │   │   ├── urlController.js  # URL business logic
-│   │   │   ├── userController.js # User business logic
-│   │   ├── middleware/
-│   │   │   ├── authMiddleware.js # Authentication middleware
-│   │   ├── server.js         # Express.js server
-│   │   ├── .env              # Environment variables
-│   │   ├── package.json
-│── frontend/  (React.js for the UI)
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── ui/       # shadcn/ui components
-│   │   │   ├── UrlForm.jsx   # Form for shortening URLs
-│   │   │   ├── UrlList.jsx   # List of shortened URLs
-│   │   │   ├── Navbar.jsx    # Navigation component
-│   │   ├── pages/
-│   │   │   ├── Home.jsx      # Home page
-│   │   │   ├── Dashboard.jsx # User dashboard
-│   │   │   ├── Login.jsx     # Login page
-│   │   │   ├── Register.jsx  # Registration page
-│   │   ├── context/
-│   │   │   ├── AuthContext.jsx # Authentication context
-│   │   ├── App.jsx           # Main application component
-│   │   ├── index.jsx         # Entry point
-│   │   ├── package.json
-│── .gitignore
-│── LICENSE
-```
+### Vercel (Frontend)
 
-## License
+1. Crea una cuenta en [Vercel](https://vercel.com) si aún no tienes una.
+2. Instala Vercel CLI:
+   ```bash
+   npm install -g vercel
+   ```
+3. Navega a la carpeta `frontend` y ejecuta:
+   ```bash
+   vercel
+   ```
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Render (Backend)
 
-## Contributing
+1. Crea una cuenta en [Render](https://render.com) si aún no tienes una.
+2. Crea un nuevo servicio web y conecta tu repositorio de GitHub.
+3. Configura las variables de entorno:
+   - `NODE_ENV=production`
+   - `PORT=5000`
+   - `MONGO_URI=tu_cadena_de_conexion_mongodb`
+   - `JWT_SECRET=tu_secreto_jwt`
+4. Configura el comando de inicio como `node backend/server.js`.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## Configuración de dominio personalizado
 
-## Author
+Para configurar un dominio personalizado para tu servicio de acortamiento de URLs:
 
-- Kevin Duhamel Hayes - [GitHub](https://github.com/kevinduhamelhayes) 
+1. Adquiere un dominio corto (por ejemplo, `surl.io`).
+2. Configura los registros DNS para que apunten a tu aplicación desplegada.
+3. Configura el dominio personalizado en Vercel y Render.
+
+## Contribuir
+
+Las contribuciones son bienvenidas. Por favor, abre un issue o un pull request para sugerir cambios o mejoras.
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles. 

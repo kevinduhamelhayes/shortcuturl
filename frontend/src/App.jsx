@@ -5,12 +5,15 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
+import Pricing from './pages/Pricing';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen flex flex-col">
+        <div className="flex flex-col min-h-screen">
           <Navbar />
           <main className="flex-grow">
             <Routes>
@@ -18,10 +21,13 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
-          <footer className="bg-gray-100 py-6">
-            <div className="max-w-7xl mx-auto px-4 text-center text-gray-600">
+          <footer className="bg-gray-100 py-6 mt-auto">
+            <div className="container-narrow text-center text-gray-600">
               <p>&copy; {new Date().getFullYear()} ShortcutURL. Todos los derechos reservados.</p>
             </div>
           </footer>

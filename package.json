@@ -1,5 +1,27 @@
 {
+  "name": "shortcuturl",
+  "version": "1.0.0",
+  "description": "URL shortener application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+    "client": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "cd frontend && npm run build",
+    "install-deps": "npm install && cd frontend && npm install"
+  },
+  "keywords": [
+    "url",
+    "shortener",
+    "mern"
+  ],
+  "author": "midudev",
+  "license": "MIT",
   "dependencies": {
-    "mongodb": "^6.14.2"
+    "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
