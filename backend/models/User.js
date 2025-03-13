@@ -18,6 +18,35 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    subscription: {
+      type: String,
+      enum: ['free', 'premium', 'enterprise'],
+      default: 'free',
+    },
+    subscriptionExpiry: {
+      type: Date,
+      default: null,
+    },
+    stripeCustomerId: {
+      type: String,
+      default: null,
+    },
+    customUrlsEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    analyticsEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    urlExpiryEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    maxUrls: {
+      type: Number,
+      default: 10, // Límite para usuarios gratuitos
+    },
   },
   {
     timestamps: true,

@@ -2,9 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const rateLimit = require('express-rate-limit');
+const slowDown = require('express-slow-down');
 const { redirectToUrl } = require('./controllers/urlController');
 const urlRoutes = require('./routes/urlRoutes');
 const userRoutes = require('./routes/userRoutes');
+const subscriptionRoutes = require('./routes/subscriptionRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -16,15 +19,53 @@ const app = express();
 
 // Middleware
 app.use(cors());
+
+// Special handling for Stripe webhook
+app.use('/api/subscriptions/webhook', express.raw({ type: 'application/json' }));
+
+// Regular middleware for other routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Rate limiting middleware
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: {
+    status: 429,
+    message: 'Too many requests, please try again later.'
+  }
+});
+
+// Apply rate limiting to all API routes
+app.use('/api/', apiLimiter);
+
+// More strict rate limiting for URL creation
+const createUrlLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10, // limit each IP to 10 URL creations per hour
+  message: {
+    status: 429,
+    message: 'Too many URLs created from this IP, please try again after an hour'
+  }
+});
+
+// Speed limiter for redirect route to prevent abuse
+const redirectLimiter = slowDown({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  delayAfter: 30, // allow 30 requests per 15 minutes, then...
+  delayMs: 500 // begin adding 500ms of delay per request
+});
 
 // Routes
 app.use('/api/urls', urlRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
 
-// Redirect route - must be after API routes
-app.get('/:shortCode', redirectToUrl);
+// Apply speed limiter to redirect route
+app.get('/:shortCode', redirectLimiter, redirectToUrl);
 
 // Root route
 app.get('/', (req, res) => {
